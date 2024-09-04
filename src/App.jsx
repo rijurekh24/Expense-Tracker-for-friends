@@ -21,7 +21,6 @@ const AuthView = () => {
   useEffect(() => {
     Api.get("/verify/account/me")
       .then((res) => {
-        console.log(res.data.user);
         ctx.setUser(res.data.user);
         navigate("/");
       })
