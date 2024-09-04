@@ -11,7 +11,7 @@ import {
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { authContext } from "../Context/AuthContext";
-
+import Api from "../Utils/api";
 export default function Signin() {
   const navigate = useNavigate();
   const ctx = useContext(authContext);
@@ -53,15 +53,13 @@ export default function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      axios
-        .post("http://localhost:8000/auth/signin", {
-          email: data.email,
-          password: data.password,
-        })
-        .then((res) => {
-          ctx.setUser(res.data.user);
-          navigate("/");
-        }).catch = (err) => {
+      Api.post("/auth/signin", {
+        email: data.email,
+        password: data.password,
+      }).then((res) => {
+        // console.log(res);
+        navigate("/");
+      }).catch = (err) => {
         const errorMessage =
           err.response && err.response.data.message
             ? err.response.data.message

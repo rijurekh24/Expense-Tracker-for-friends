@@ -11,15 +11,20 @@ import Signup from "./Components/Signup";
 import Home from "./Components/Home";
 import { Box } from "@mui/material";
 import axios from "axios";
-
+import { authContext } from "./Context/AuthContext";
+import Api from "./Utils/api";
 const AuthView = () => {
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
+  const ctx = useContext(authContext);
 
   useEffect(() => {
-    axios
-      .get("")
-      .then((res) => {})
+    Api.get("/verify/account/me")
+      .then((res) => {
+        console.log(res.data.user);
+        ctx.setUser(res.data.user);
+        navigate("/");
+      })
       .catch(() => {
         navigate("/signin");
       })

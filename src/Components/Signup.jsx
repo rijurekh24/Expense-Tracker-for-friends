@@ -11,11 +11,13 @@ import {
 } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Api from "../Utils/api";
 export default function Signup() {
   const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
     email: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -26,6 +28,8 @@ export default function Signup() {
     password: "",
     confirmPassword: "",
   });
+
+  const [mailError, setMailError] = useState("");
 
   const validate = () => {
     const newErrors = {};
@@ -63,17 +67,17 @@ export default function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      axios
-        .post("http://localhost:8000/auth/signup", {
-          name: data.name,
-          email: data.email,
-          password: data.password,
-        })
+      Api.post("/users/register", {
+        name: data.name,
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      })
         .then((res) => {
           console.log(res.data);
         })
         .catch((err) => {
-          console.log(err.response ? err.response.data : err.message);
+          setMailError(err?.response?.data?.message);
         });
     }
   };
@@ -110,6 +114,15 @@ export default function Signup() {
           <Input
             required
             fullWidth
+            name="username"
+            placeholder="Enter username"
+            value={data.username}
+            onChange={handleChange}
+            sx={{ mt: 3 }}
+          />
+          <Input
+            required
+            fullWidth
             name="name"
             placeholder="Enter name"
             value={data.name}
@@ -130,6 +143,8 @@ export default function Signup() {
           {errors.email && (
             <Typography color="error">{errors.email}</Typography>
           )}
+
+          {mailError && <Typography color="error">{mailError}</Typography>}
 
           <Grid container spacing={2}>
             <Grid item xs={6}>
