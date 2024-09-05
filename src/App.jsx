@@ -9,6 +9,7 @@ import {
 import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
 import Home from "./Components/Home";
+import LoadingPage from "./Components/Loader";
 import { Box } from "@mui/material";
 import axios from "axios";
 import { authContext } from "./Context/AuthContext";
@@ -33,7 +34,7 @@ const AuthView = () => {
   }, []);
 
   return loading ? (
-    <Box>Hello</Box>
+    <LoadingPage />
   ) : (
     <Box>
       <Outlet />

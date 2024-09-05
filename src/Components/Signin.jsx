@@ -57,8 +57,7 @@ export default function Signin() {
         email: data.email,
         password: data.password,
       }).then((res) => {
-        // console.log(res);
-        navigate("/");
+        navigate("/", { replace: true });
       }).catch = (err) => {
         const errorMessage =
           err.response && err.response.data.message
