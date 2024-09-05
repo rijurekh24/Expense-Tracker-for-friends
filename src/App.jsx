@@ -10,10 +10,10 @@ import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
 import Home from "./Components/Home";
 import LoadingPage from "./Components/Loader";
-import { Box } from "@mui/material";
-import axios from "axios";
+import { Box, CssBaseline } from "@mui/material";
 import { authContext } from "./Context/AuthContext";
 import Api from "./Utils/api";
+import Sidebar from "./Components/Sidebar";
 const AuthView = () => {
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const AuthView = () => {
     Api.get("/verify/account/me")
       .then((res) => {
         ctx.setUser(res.data.user);
+        console.log(res.data.user);
         navigate("/");
       })
       .catch(() => {
@@ -36,8 +37,12 @@ const AuthView = () => {
   return loading ? (
     <LoadingPage />
   ) : (
-    <Box>
-      <Outlet />
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <Sidebar />
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Outlet />
+      </Box>
     </Box>
   );
 };
