@@ -16,9 +16,7 @@ const Search = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [sentRequests, setSentRequests] = useState(new Set()); // Track sent requests
   const ctx = useContext(authContext);
-
   const handleChange = (e) => {
     const { value } = e.target;
     setSearchInput(value);
@@ -42,10 +40,9 @@ const Search = () => {
   };
 
   const handleSendRequest = (id) => {
-    Api.post("/get/add-friend", { userId: ctx?.user?._id, friendId: id })
+    Api.post("/get/add-friend", { userId: ctx.user._id, friendId: id })
       .then((res) => {
         console.log(res);
-        // setSentRequests((prev) => new Set(prev).add(username));
       })
       .catch((error) => {
         console.error("Error sending friend request:", error.response);
@@ -92,7 +89,9 @@ const Search = () => {
             {ctx.user.username !== option.username ? (
               <Icon
                 icon={
-                  sentRequests.has(option._id)
+                  ctx.user.friends.some(
+                    (friend) => friend.friend_id === option._id
+                  )
                     ? "mdi:account-check"
                     : "fluent-mdl2:add-friend"
                 }
@@ -100,7 +99,9 @@ const Search = () => {
                 width={23}
                 height={23}
                 onClick={() =>
-                  !sentRequests.has(option._id) && handleSendRequest(option._id)
+                  !ctx.user.friends.some(
+                    (friend) => friend._id === option._id
+                  ) && handleSendRequest(option._id)
                 }
                 style={{ cursor: "pointer" }}
               />

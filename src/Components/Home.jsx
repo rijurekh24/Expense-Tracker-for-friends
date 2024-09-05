@@ -1,20 +1,24 @@
-import { Box, Button, Typography } from "@mui/material";
 import React, { useContext } from "react";
-import { authContext } from "../Context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
 import Search from "./Search";
+import { authContext } from "../Context/AuthContext";
+
 const Home = () => {
   const ctx = useContext(authContext);
-  const navigate = useNavigate();
-  const handleClick = () => {
-    localStorage.clear();
-    navigate("/signin");
-  };
+
   return (
     <Box>
-      {/* <Typography>Welcome Back, {ctx.user?.name}</Typography>
-      <Typography>Email: {ctx.user?.email}</Typography> */}
-      <Search />
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+        <Typography sx={{ fontSize: "30px" }}>
+          Welcome, Mr. {ctx.user?.name}
+        </Typography>
+        <Search />
+      </Box>
+      <ul>
+        {ctx.user?.friends?.map((friend, key) => (
+          <li key={key}>{friend.name}</li>
+        ))}
+      </ul>
     </Box>
   );
 };
