@@ -91,7 +91,7 @@ const CreateGroupModal = ({ open, handleClose }) => {
         <TextField
           fullWidth
           label="Group Name"
-          variant="outlined"
+          variant="standard"
           value={groupName}
           onChange={(e) => setGroupName(e.target.value)}
           margin="normal"
@@ -100,7 +100,7 @@ const CreateGroupModal = ({ open, handleClose }) => {
         <TextField
           fullWidth
           label="Search Friends"
-          variant="outlined"
+          variant="standard"
           value={searchQuery}
           onChange={handleSearch}
           margin="normal"
@@ -174,7 +174,16 @@ const CreateGroupModal = ({ open, handleClose }) => {
           ))}
         </List>
 
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button
+          variant="contained"
+          sx={{
+            bgcolor: "#7F00FF",
+            "&:hover": {
+              bgcolor: "#7F00FF",
+            },
+          }}
+          onClick={handleSubmit}
+        >
           Create Group
         </Button>
       </Box>

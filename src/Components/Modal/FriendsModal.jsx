@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import { Divider, InputBase } from "@mui/material";
 import { authContext } from "../../Context/AuthContext";
 import FriendList from "../FriendList";
+import Api from "../../Utils/api";
 
 const modalStyle = {
   position: "absolute",
@@ -38,6 +39,17 @@ const FriendsModal = ({ open, onClose }) => {
     setSearchQuery(event.target.value);
   };
 
+  const handleUnfollow = (id) => {
+    Api.post("/get/add-friend", { userId: ctx.user._id, friendId: id })
+      .then((res) => {
+        console.log(res);
+        ctx.fetchDetails();
+      })
+      .catch((error) => {
+        console.error("Error sending friend request:", error.response);
+      });
+  };
+
   return (
     <Modal
       open={open}
@@ -45,7 +57,7 @@ const FriendsModal = ({ open, onClose }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={modalStyle} width={{ xs: 500 }}>
+      <Box sx={modalStyle} width={{ xs: 450 }}>
         <Box
           display={"flex"}
           flexDirection={"column"}
@@ -99,6 +111,7 @@ const FriendsModal = ({ open, onClose }) => {
                 key={index}
                 name={item.name}
                 username={item.username}
+                onUnfollow={() => handleUnfollow(item.friend_id)}
               />
             ))}
           </Box>

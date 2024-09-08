@@ -1,5 +1,6 @@
 import { Avatar, Box, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 const FriendList = (props) => {
   const navigate = useNavigate();
@@ -9,9 +10,11 @@ const FriendList = (props) => {
       justifyContent={"space-between"}
       alignItems={"center"}
       mb={2}
-      px={1}
+      pl={1}
+      pr={2}
+      width={"100%"}
     >
-      <Box display={"flex"} gap={1} alignItems={"center"}>
+      <Box display={"flex"} gap={1} alignItems={"center"} width={"100%"}>
         {props.dp ? (
           <Avatar
             src={props.dp}
@@ -50,6 +53,18 @@ const FriendList = (props) => {
             {props.name}
           </Typography>
         </Box>
+
+        <Icon
+          icon={"mdi:account-check"}
+          color="#7F00FF"
+          width={23}
+          height={23}
+          onClick={props.onUnfollow}
+          style={{
+            cursor: "pointer",
+            marginLeft: "auto",
+          }}
+        />
       </Box>
     </Box>
   );

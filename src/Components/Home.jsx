@@ -19,7 +19,16 @@ const Home = () => {
         <Search />
       </Box>
 
-      <Button variant="contained" color="primary" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        sx={{
+          bgcolor: "#7F00FF",
+          "&:hover": {
+            bgcolor: "#7F00FF",
+          },
+        }}
+        onClick={handleOpen}
+      >
         Create Group
       </Button>
       <CreateGroupModal open={modalOpen} handleClose={handleClose} />
