@@ -43,6 +43,7 @@ const Search = () => {
     Api.post("/get/add-friend", { userId: ctx.user._id, friendId: id })
       .then((res) => {
         console.log(res);
+        ctx.fetchDetails();
       })
       .catch((error) => {
         console.error("Error sending friend request:", error.response);

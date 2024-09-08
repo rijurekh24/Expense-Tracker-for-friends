@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
-import { Avatar, Box, Typography } from "@mui/material";
+import React, { useContext, useState } from "react";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import Search from "./Search";
 import { authContext } from "../Context/AuthContext";
+import CreateGroupModal from "./Modal/CreateGroupModal";
 
 const Home = () => {
   const ctx = useContext(authContext);
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
 
   return (
     <Box>
@@ -14,36 +18,11 @@ const Home = () => {
         </Typography>
         <Search />
       </Box>
-      <Typography
-        sx={{ fontSize: "20px", color: "#7F00FF", fontWeight: "bold", mb: 2 }}
-      >
-        Your Friends
-      </Typography>
-      <Box>
-        {ctx.user?.friends?.map((friend) => {
-          const [firstName] = friend.name.split(" ");
-          const avatarLetter = firstName
-            ? firstName.charAt(0).toUpperCase()
-            : "";
 
-          return (
-            <Box
-              key={friend._id}
-              display="flex"
-              alignItems="center"
-              gap={1}
-              mb={1}
-            >
-              <Avatar sx={{ bgcolor: "#7F00FF", color: "#fff" }}>
-                {avatarLetter}
-              </Avatar>
-              <Typography>
-                {friend.name} ({friend.username})
-              </Typography>
-            </Box>
-          );
-        })}
-      </Box>
+      <Button variant="contained" color="primary" onClick={handleOpen}>
+        Create Group
+      </Button>
+      <CreateGroupModal open={modalOpen} handleClose={handleClose} />
     </Box>
   );
 };
