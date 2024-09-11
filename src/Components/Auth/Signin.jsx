@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { authContext } from "../Context/AuthContext";
-import Api from "../Utils/api";
+import { authContext } from "../../Context/AuthContext";
+import Api from "../../Utils/api";
 export default function Signin() {
   const navigate = useNavigate();
   const ctx = useContext(authContext);

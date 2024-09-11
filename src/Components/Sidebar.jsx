@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
-import FriendsModal from "./Modal/FriendsModal"; // Ensure this import is correct
+import FriendsModal from "./Modal/FriendsModal";
 
 const SIDEBAR_ITEMS = [
   { text: "Home", icon: "ic:baseline-home", path: "/" },
   { text: "Friends", icon: "fa-solid:user-friends", path: "/" },
-  { text: "Groups", icon: "grommet-icons:group", path: "/" },
+  { text: "Groups", icon: "grommet-icons:group", path: "/groups" },
   { text: "Profile", icon: "gg:profile", path: "/" },
   { text: "Settings", icon: "material-symbols-light:settings", path: "/" },
 ];
@@ -25,9 +25,9 @@ const Sidebar = () => {
 
   const handleClick = (path, itemText) => {
     if (itemText === "Friends") {
-      setFriendsModalOpen(true); // Open the Friends modal
+      setFriendsModalOpen(true);
     } else {
-      navigate(path); // Navigate for other items
+      navigate(path);
     }
   };
 
@@ -86,7 +86,6 @@ const Sidebar = () => {
         </List>
       </Drawer>
 
-      {/* Friends Modal */}
       <FriendsModal
         open={isFriendsModalOpen}
         onClose={() => setFriendsModalOpen(false)}

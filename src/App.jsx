@@ -6,14 +6,16 @@ import {
   useNavigate,
   Outlet,
 } from "react-router-dom";
-import Signin from "./Components/Signin";
-import Signup from "./Components/Signup";
+import Signin from "./Components/Auth/Signin";
+import Signup from "./Components/Auth/Signup";
 import Home from "./Components/Home";
 import LoadingPage from "./Components/Loader";
 import { Box, CssBaseline } from "@mui/material";
 import { authContext } from "./Context/AuthContext";
 import Api from "./Utils/api";
 import Sidebar from "./Components/Sidebar";
+import GroupPage from "./Components/Groups/GroupPage";
+import GroupList from "./Components/Groups/GroupList";
 const AuthView = () => {
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
@@ -53,6 +55,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AuthView />}>
           <Route element={<Home />} index />
+          <Route path="/groups" element={<GroupList />} />
+          <Route path="group/:_id" element={<GroupPage />} />
         </Route>
 
         <Route path="/signin" element={<Signin />} />

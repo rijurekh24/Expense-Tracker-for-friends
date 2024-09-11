@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Api from "../Utils/api";
+import Api from "../../Utils/api";
 export default function Signup() {
   const navigate = useNavigate();
   const [data, setData] = useState({

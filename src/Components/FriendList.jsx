@@ -21,7 +21,7 @@ const FriendList = (props) => {
             sx={{
               borderRadius: "20px",
               color: "#fff",
-              color: "#7F00FF",
+              bgcolor: "#7F00FF",
               width: 40,
               height: 40,
             }}
