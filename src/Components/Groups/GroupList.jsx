@@ -8,7 +8,10 @@ const GroupList = () => {
   const ctx = useContext(authContext);
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
-  const handleClose = () => setModalOpen(false);
+  const handleClose = () => {
+    setModalOpen(false);
+    ctx.fetchDetails();
+  };
 
   return (
     <Box>

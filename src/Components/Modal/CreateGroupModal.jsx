@@ -68,6 +68,7 @@ const CreateGroupModal = ({ open, handleClose }) => {
         console.log(err);
       });
 
+    ctx.fetchDetails();
     handleClose();
     setGroupName("");
     setSelectedFriends([]);
