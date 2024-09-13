@@ -25,7 +25,7 @@ const AuthView = () => {
     Api.get("/verify/account/me")
       .then((res) => {
         ctx.setUser(res.data.user);
-        console.log(res.data.user);
+        // console.log(res.data.user);
         navigate("/");
       })
       .catch(() => {

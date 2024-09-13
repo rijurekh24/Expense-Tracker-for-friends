@@ -74,7 +74,7 @@ export default function Signup() {
         password: data.password,
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
         })
         .catch((err) => {
           setMailError(err?.response?.data?.message);

@@ -62,10 +62,10 @@ const CreateGroupModal = ({ open, handleClose }) => {
       _id: ctx?.user?._id,
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
 
     ctx.fetchDetails();

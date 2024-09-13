@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Api from "../../Utils/api";
 import {
@@ -16,6 +16,7 @@ import {
   Paper,
   Box,
 } from "@mui/material";
+import { authContext } from "../../Context/AuthContext";
 
 const GroupPage = () => {
   const { _id } = useParams();
@@ -25,17 +26,23 @@ const GroupPage = () => {
   const [expenseAmount, setExpenseAmount] = useState("");
   const [splitType, setSplitType] = useState("equal");
   const [customShares, setCustomShares] = useState({});
+  const ctx = useContext(authContext);
 
-  useEffect(() => {
+  const fetchGroupData = () => {
     Api.get(`/groups/group/${_id}`)
       .then((res) => {
         const group = res.data.group;
+        console.log(group);
         setGroupData(group);
         setExpenses(group.expenses || []);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
+  };
+
+  useEffect(() => {
+    fetchGroupData();
   }, [_id]);
 
   const handleAddExpense = () => {
@@ -74,7 +81,20 @@ const GroupPage = () => {
       };
     }
 
-    console.log(expenseDetail);
+    Api.post("/groups/create-transaction", {
+      _id: ctx?.user?._id,
+      group_id: groupData?._id,
+      description: expenseDescription,
+      amount: totalAmount,
+      shares: expenseDetail.shares,
+    })
+      .then((res) => {
+        fetchGroupData();
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+
     setExpenses([...expenses, expenseDetail]);
     setExpenseDescription("");
     setExpenseAmount("");
@@ -90,14 +110,12 @@ const GroupPage = () => {
   };
 
   const renderExpenseShares = (shares) => {
-    return Object.entries(shares).map(([id, share]) => {
+    return Object.entries(shares).map(([name, share]) => {
       const shareAmount = parseFloat(share) || 0;
       return (
-        <ListItem key={id}>
+        <ListItem key={name}>
           <ListItemText
-            primary={`${
-              groupData.members.find((m) => m.user_id._id === id)?.user_id.name
-            }`}
+            primary={`${name}`}
             secondary={` ₹${shareAmount.toFixed(2)}`}
           />
         </ListItem>
@@ -105,8 +123,13 @@ const GroupPage = () => {
     });
   };
 
+  const sortedTransactions =
+    groupData?.transactions
+      ?.slice()
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) || [];
+
   return (
-    <Container>
+    <Box>
       <Typography variant="h5" gutterBottom>
         Group : {groupData?.name}
       </Typography>
@@ -197,17 +220,17 @@ const GroupPage = () => {
 
       <Typography variant="h6">Expenses</Typography>
       <List>
-        {expenses.map((exp, index) => (
+        {sortedTransactions.map((exp, index) => (
           <Paper elevation={2} key={index} sx={{ padding: 2, marginBottom: 2 }}>
             <Typography variant="h6">{exp.description}</Typography>
             <Typography variant="h6">
               Total Bill: ₹{exp.amount.toFixed(2)}
             </Typography>
-            <List>{renderExpenseShares(exp.shares)}</List>
+            <List>{renderExpenseShares(exp.share)}</List>
           </Paper>
         ))}
       </List>
-    </Container>
+    </Box>
   );
 };
 

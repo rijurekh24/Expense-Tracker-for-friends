@@ -25,11 +25,11 @@ const Search = () => {
       setIsFetching(true);
       Api.post("/get/users", { query: value })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setSearchResult(response.data);
         })
         .catch((error) => {
-          console.error("Error:", error.response);
+          // console.error("Error:", error.response);
         })
         .finally(() => {
           setIsFetching(false);
@@ -42,11 +42,11 @@ const Search = () => {
   const handleSendRequest = (id) => {
     Api.post("/get/add-friend", { userId: ctx.user._id, friendId: id })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         ctx.fetchDetails();
       })
       .catch((error) => {
-        console.error("Error sending friend request:", error.response);
+        // console.error("Error sending friend request:", error.response);
       });
   };
 
